@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Interactive Video Sections</title>
+        <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: white;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        
+        /* Video sections */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .video-card {
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .video-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            background-color: #ddd;
+            cursor: pointer;
+        }
+        
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #999;
+        }
+        
+        .video-info {
+            padding: 1.5rem;
+        }
+        
+        .video-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .video-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Call to action button */
+        .cta-button {
+            display: inline-block;
+            background-color: #1a73e8; /* Blue color */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color: #1557b0;
+        }
+        
+        /* Footer */
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            color: #666;
+            padding: 2rem 0;
+            border-top: 1px solid #eee;
+        }
+
+        /* Back Button Styles */
+        .back-button-container {
+            position: relative;
+            padding: 1rem 0;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            background-color: #1a73e8;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .back-button:hover {
+            background-color: #1557b0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .back-button:active {
+            transform: translateY(0);
+        }
+        
+        .back-button::before {
+            content: "←";
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+        /* Media Queries */
+
+/* For tablets and below */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .video-title {
+        font-size: 1.1rem;
+    }
+
+    .video-description {
+        font-size: 0.95rem;
+    }
+
+    .cta-button {
+        padding: 0.6rem 1rem;
+        font-size: 0.95rem;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+}
+
+/* For mobile phones */
+@media (max-width: 480px) {
+    .video-grid {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    .subtitle {
+        font-size: 0.95rem;
+    }
+
+    .video-title {
+        font-size: 1rem;
+    }
+
+    .video-description {
+        font-size: 0.9rem;
+    }
+
+    .cta-button {
+        width: 100%;
+        text-align: center;
+        padding: 0.6rem;
+    }
+
+    .back-button {
+        width: 100%;
+        justify-content: center;
+        padding: 0.6rem;
+    }
+}
+
+    </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="back-button-container">
+                <button class="back-button"
+                    onclick="window.history.back()">Back</button>
+            </div>
+
+            <header>
+                <h1>Look for Funding in any of these website below</h1>
+                <p class="subtitle">Click on any website below for listing of
+                    buseries, </p>
+            </header>
+
+            <div class="video-grid">
+                <!-- Video Card 1 -->
+                <div class="video-card">
+                    <div class="video-container" data-video-id="video1">
+                        <div class="video-placeholder">Graduates24</div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Graduates24</h3>
+                        <p class="video-description">Buseries, internships and
+                            job oppurtunities.</p>
+                        <a href="https://www.graduates24.com/"
+                            class="cta-button">Go to</a>
+                    </div>
+                </div>
+
+                <!-- Video Card 2 -->
+                <div class="video-card">
+                    <div class="video-container" data-video-id="video2">
+                        <div class="video-placeholder">Career Wise</div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Career Wise</h3>
+                        <p class="video-description">Apply for many buseries in
+                            one platfrom</p>
+                        <a href="https://careerwise.co.za/"
+                            class="cta-button">Go to</a>
+                    </div>
+                </div>
+
+                <!-- Video Card 3 -->
+                <div class="video-card">
+                    <div class="video-container" data-video-id="video3">
+                        <div class="video-placeholder">ZA Buseries</div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Za Buseries</h3>
+                        <p class="video-description">Find multiple buseries.</p>
+                        <a href="https://www.zabursaries.co.za/"
+                            class="cta-button">Go To</a>
+                    </div>
+                </div>
+
+                <!-- Video Card 4 -->
+                <div class="video-card">
+                    <div class="video-container" data-video-id="video4">
+                        <div class="video-placeholder">Buseries Africa</div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Buseries Africa</h3>
+                        <p class="video-description">List of buseries.</p>
+                        <a href="https://www.bursariesafrica.co.za/"
+                            class="cta-button">Go To</a>
+                    </div>
+                </div>
+            </div>
+
+            <footer>
+                <p>&copy; Bubble Academy. All rights reserved.</p>
+            </footer>
+        </div>
+
+    </body>
+</html>
