@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Physics Quiz</title>
+        <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .quiz-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .timer {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options label {
+            display: block;
+            margin: 5px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .options label:hover {
+            background-color: #f8f8f8;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .review-section {
+            display: none;
+            margin-top: 20px;
+        }
+        .review-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .correct { background-color: #dfffdf; }
+        .incorrect { background-color: #ffe6e6; }
+    </style>
+    </head>
+    <body>
+        <div class="timer" id="timer">Time: 10:00</div>
+
+        <!-- Quiz 1 -->
+        <div class="quiz-container" id="quiz1">
+            <h2>Physics Quiz 1</h2>
+            <div id="questions1"></div>
+            <button onclick="submitQuiz(1)">Submit set 1</button>
+            <div class="review-section" id="review1"></div>
+        </div>
+
+        <!-- Quiz 2 -->
+        <div class="quiz-container" id="quiz2">
+            <h2>Physics Quiz 2</h2>
+            <div id="questions2"></div>
+            <button onclick="submitQuiz(2)">Submit set 2</button>
+            <div class="review-section" id="review2"></div>
+        </div>
+
+        <script>
+        // Quiz data (questions from PDF and additional questions)
+        const quizzes = {
+            1: [
+                {
+                    question: "1.1 A constant net force is applied to a block. Which statement is correct?",
+                    options: ["A: Constant velocity", "B: Constant acceleration", 
+                            "C: Increasing acceleration", "D: Decreasing acceleration"],
+                    correct: 1
+                },
+                {
+                    question: "1.2 A crate on an inclined plane - frictional force is:",
+                    options: ["A: Equal to parallel weight component", 
+                            "B: Larger than parallel component", 
+                            "C: Equal to perpendicular component", 
+                            "D: Larger than perpendicular component"],
+                    correct: 0
+                },
+                {
+                    question: "What does Ohm's Law state?",
+                    options: ["A: V = IR", "B: P = IV", "C: Q = CV", "D: F = ma"],
+                    correct: 0
+                }
+            ],
+            2: [
+                {
+                    question: "1.6 Doppler effect - observed frequency when source moves away:",
+                    options: ["A: Higher", "B: Lower", 
+                            "C: Same", "D: Depends on speed"],
+                    correct: 1
+                },
+                {
+                    question: "What is the unit of electric charge?",
+                    options: ["A: Volt", "B: Coulomb", "C: Ohm", "D: Faraday"],
+                    correct: 1
+                },
+                {
+                    question: "The work function of a metal is...",
+                    options: ["A: Minimum energy to eject electrons", 
+                            "B: Maximum kinetic energy of electrons",
+                            "C: Photon energy required", 
+                            "D: Electron rest energy"],
+                    correct: 0
+                }
+                {
+                    question: "According to Newton's Second law of motion, the net force acting on an object is :",
+                    options:["A; Equal to the acceleration of the object",
+            "B: Inversely proportional to the acceleration of the object", 
+        "C: Indirectly proportional to the acceleration of the object",
+        "D: Directly proportional to the acceleration of the object. "],
+                    correct: 0
+                },
+                {
+                    question: "The unit of force is:",
+                    options:["A: Joule", "B: Newton", "C: Watt", "D: Pascal"],
+                    correct: 1
+                },
+                {
+                    question: "The acceleration due to gravity on the surface of the Earth is approximately:",
+                    options:["A: 9.8 m/s^2", "B: 10 m/s^2", "C: 9.81 m/s^2", "D: 8.9 m/s^2"],
+                    correct: 0  
+                }
+            ]
+        };
+
+        let timeLeft = 600; // 10 minutes in seconds
+        let timerId;
+
+        function initializeQuiz(quizNumber) {
+            const container = document.getElementById(`questions${quizNumber}`);
+            quizzes[quizNumber].forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.innerHTML = `
+                    <p>${q.question}</p>
+                    <div class="options" id="q${quizNumber}-${index}">
+                        ${q.options.map((opt, i) => `
+                            <label>
+                                <input type="radio" name="q${quizNumber}-${index}" value="${i}">
+                                ${opt}
+                            </label>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function startTimer() {
+            timerId = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer').textContent = 
+                    `Time: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+                if(timeLeft <= 0) {
+                    clearInterval(timerId);
+                    alert('Time is up!');
+                    submitQuiz(1);
+                    submitQuiz(2);
+                }
+            }, 1000);
+        }
+
+        function submitQuiz(quizNumber) {
+            clearInterval(timerId);
+            const reviewSection = document.getElementById(`review${quizNumber}`);
+            reviewSection.style.display = 'block';
+            reviewSection.innerHTML = '<h3>Review Answers:</h3>';
+
+            quizzes[quizNumber].forEach((q, index) => {
+                const selected = document.querySelector(
+                    `input[name="q${quizNumber}-${index}"]:checked`
+                );
+                const userAnswer = selected ? parseInt(selected.value) : null;
+                
+                const reviewItem = document.createElement('div');
+                reviewItem.className = `review-item ${userAnswer === q.correct ? 'correct' : 'incorrect'}`;
+                reviewItem.innerHTML = `
+                    <p><strong>Question ${index + 1}:</strong> ${q.question}</p>
+                    <p>Your answer: ${userAnswer !== null ? q.options[userAnswer] : 'Not answered'}</p>
+                    <p>Correct answer: ${q.options[q.correct]}</p>
+                `;
+                reviewSection.appendChild(reviewItem);
+            });
+        }
+
+        // Initialize both quizzes
+        initializeQuiz(1);
+        initializeQuiz(2);
+        startTimer();
+    </script>
+    </body>
+</html>

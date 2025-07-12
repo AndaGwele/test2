@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Interactive Video Sections</title>
+        <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: white;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        
+        /* Video sections */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .video-card {
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .video-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            background-color: #ddd;
+            cursor: pointer;
+        }
+        
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #999;
+        }
+        
+        .video-info {
+            padding: 1.5rem;
+        }
+        
+        .video-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .video-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Call to action button */
+        .cta-button {
+            display: inline-block;
+            background-color: #1a73e8; /* Blue color */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color: #1557b0;
+        }
+        
+        /* Footer */
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            color: #666;
+            padding: 2rem 0;
+            border-top: 1px solid #eee;
+        }
+
+        /* Back Button Styles */
+        .back-button-container {
+            position: relative;
+            padding: 1rem 0;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            background-color: #1a73e8;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .back-button:hover {
+            background-color: #1557b0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .back-button:active {
+            transform: translateY(0);
+        }
+        
+        .back-button::before {
+            content: "←";
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+        /* Media Queries */
+
+/* For tablets and below */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .video-title {
+        font-size: 1.1rem;
+    }
+
+    .video-description {
+        font-size: 0.95rem;
+    }
+
+    .cta-button {
+        padding: 0.6rem 1rem;
+        font-size: 0.95rem;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+}
+
+/* For mobile phones */
+@media (max-width: 480px) {
+    .video-grid {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    .subtitle {
+        font-size: 0.95rem;
+    }
+
+    .video-title {
+        font-size: 1rem;
+    }
+
+    .video-description {
+        font-size: 0.9rem;
+    }
+
+    .cta-button {
+        width: 100%;
+        text-align: center;
+        padding: 0.6rem;
+    }
+
+    .back-button {
+        width: 100%;
+        justify-content: center;
+        padding: 0.6rem;
+    }
+}
+
+    </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="back-button-container">
+                <button class="back-button"
+                    onclick="window.history.back()">Back</button>
+            </div>
+
+            <header>
+                <h1>Below is a list of all Artificial intelligance you can use
+                    to assist you in your studies</h1>
+                <p class="subtitle">Click on any link below for a listing, </p>
+            </header>
+
+            <div class="video-grid">
+                <!-- Video Card 1 -->
+                <div class="video-card">
+                    <div class="video-container" data-video-id="video1">
+                        <div class="video-placeholder">Chat-GPT</div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Chat-GPT</h3>
+                        <p class="video-description">AI by Open Ai.</p>
+                        <a href="https://openai.com/chatgpt/overview/"
+                            class="cta-button">Go to</a>
+                    </div>
+                </div>
+
+                <!-- Video Card 2 -->
+                <div class="video-card">
+                    <div class="video-container" data-video-id="video2">
+                        <div class="video-placeholder">Deep Seek</div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Deep seek Ai</h3>
+                        <p class="video-description">An AI by Deep seek</p>
+                        <a href="https://www.deepseek.com/en"
+                            class="cta-button">Go to</a>
+                    </div>
+                </div>
+
+                <!-- Video Card 3 -->
+                <div class="video-card">
+                    <div class="video-container" data-video-id="video3">
+                        <div class="video-placeholder">Co Pilot</div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Co Pilot</h3>
+                        <p class="video-description">Ai by Micro Soft.</p>
+                        <a href="https://copilot.microsoft.com/chats"
+                            class="cta-button">Go To</a>
+                    </div>
+                </div>
+
+                <!-- Video Card 4 -->
+                <div class="video-card">
+                    <div class="video-container" data-video-id="video4">
+                        <div class="video-placeholder">Meta AI</div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">AI By META</h3>
+                        <p class="video-description">List of buseries.</p>
+                        <a href="https://www.meta.ai/"
+                            class="cta-button">Go To</a>
+                    </div>
+                </div>
+            </div>
+
+            <footer>
+                <p>&copy; Bubble Academy. All rights reserved.</p>
+            </footer>
+        </div>
+
+    </body>
+</html>
