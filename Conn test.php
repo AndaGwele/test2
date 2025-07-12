@@ -1,10 +1,13 @@
 <?php
-$servername = "sql109.infinityfree.com";
-$username = "if0_39431375"; // Default XAMPP username
-$password = "AR18Hx0rRM2"; // Default XAMPP password (empty)
-$database = "if0_39431375_bubble_academy"; // Replace with your DB name
+//$servername = "sql109.infinityfree.com";
+//$username = "if0_39431375"; // Default XAMPP username
+//$password = "AR18Hx0rRM2"; // Default XAMPP password (empty)
+//$database = "if0_39431375_bubble_academy"; // Replace with your DB name
 //auath plugin :UFg9XNxhU2MVbOFv
-
+$servername = getenv('servername');
+$username = getenv('username');
+$password = getenv('password');
+$database = getenv('database');
 //BubbleAcademy_1
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
